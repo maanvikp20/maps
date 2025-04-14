@@ -219,7 +219,7 @@ function addGameToPlayer(playerName, game) {
 }
 
 playerGamesMap.forEach((games, player) => {
-    for (let i = 0; i < 100000; i++) {
+    for (let i = 0; i < 1000; i++) {
         let randomGame = gameArray[Math.floor(Math.random() * gameArray.length)];
         addGameToPlayer(player, randomGame);
     }

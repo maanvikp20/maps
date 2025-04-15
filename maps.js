@@ -1,7 +1,9 @@
+// This creates a map of players and their games for the data to be stored
 const playerGamesMap = new Map([
     ["Maanvik", new Set()],
     ["Marge", new Set()],
-    ["Potato", new Set()]
+    ["Potato", new Set()],
+    ["Homer", new Set()],
 ]);
 
 // Array with all the games that can be played
@@ -197,12 +199,22 @@ let gameArray = ['Minecraft', 'Fortnite', 'Roblox', 'Apex Legends', 'Call of Dut
 'Clone Hero', 'Frets on Fire', 'Phase Shift',
 'Synthesia', 'Piano Tiles', 'Magic Piano'];
 
-let playerScores = [
-    [0, 1, 2], // Maanvik
-    [2, 3, 4], // Marge
-    [5, 6, 7] // Potato
-]
+// Array of scores to be added for every player
+let playerScores = []
 
+// Function to create a random score row for each player
+function scoresToPlayer(scoresList) {
+    playerGamesMap.forEach((player) => {
+        let scoreRow = [];
+        for (let i = 0; i < 3; i++) {
+            let randomScore = Math.floor(Math.random() * 101);
+            scoreRow.push(randomScore);
+        }
+        playerScores.push(scoreRow);
+    });
+}
+
+// Pulls game from array and adds it to the player
 function addGameToPlayer(playerName, game) {
     if (!playerGamesMap.has(playerName)) {
         console.log(`Player ${playerName} does not exist.`);
@@ -218,13 +230,18 @@ function addGameToPlayer(playerName, game) {
     }
 }
 
+// Randomly assign x games to each player
 playerGamesMap.forEach((games, player) => {
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 4; i++) {
         let randomGame = gameArray[Math.floor(Math.random() * gameArray.length)];
         addGameToPlayer(player, randomGame);
     }
 });
 
+// Add scores for all players
+scoresToPlayer(playerScores);
+
+// Calls function to add games to player
 console.log("\n🎮 Player Games Summary:");
 playerGamesMap.forEach((games, player) => {
     console.log(`${player}: ${[...games].join(", ")}`);
@@ -234,6 +251,7 @@ playerGamesMap.forEach((games, player) => {
 console.log("\n📊 Player Score Summary:");
 const playerNames = Array.from(playerGamesMap.keys());
 
+// Loop through each player's scores and calculate the average
 playerScores.forEach((scores, index) => {
     let name = playerNames[index];
     let average = scores.reduce((a, b) => a + b, 0) / scores.length;
